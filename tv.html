@@ -45,20 +45,20 @@ const qs=new URLSearchParams(location.search);
 if(qs.has("kanal")){const n=parseInt(qs.get("kanal"),10);if(!isNaN(n)&&n>=0&&n<channels.length)current=n}
 const P=document.getElementById("player"),N=document.getElementById("name");
 function card(title,text,buttons,extra=""){P.innerHTML=`<div class="center"><div class="card"><h1>${title}</h1><p class="note">${text}</p>${extra}<div class="actions">${buttons}</div></div></div>`}
-function external(name,url){card(name,"Dieser Anbieter kann die Einbettung im Second-Life-TV blockieren. Öffne den offiziellen Sender bei Bedarf direkt.",`<a class="btn" href="${url}" target="_blank" rel="noopener noreferrer">Sender öffnen</a>`)}
+function external(name,url){card(name,"Dieser Anbieter kann die Einbettung im Second-Life-TV blockieren. Öffne den offiziellen Sender bei Bedarf direkt.",`<a class="btn" href="${url}" target="_self">Sender öffnen</a>`)}
 function youtube(){
  card("YouTube","Füge eine YouTube-Video-ID ein. Der offizielle Embed-Player wird direkt im TV geladen.",
- `<button onclick="playYT()">Video laden</button><a class="btn" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube öffnen</a>`,
+ `<button onclick="playYT()">Video laden</button><a class="btn" href="https://www.youtube.com/" target="_self">YouTube öffnen</a>`,
  `<p><input id="ytid" placeholder="YouTube Video-ID"></p>`);
 }
 function playYT(){const id=document.getElementById("ytid").value.trim().replace(/[^A-Za-z0-9_-]/g,"");if(!id)return;P.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`}
 function twitch(){
  card("Twitch","Twitch benötigt für eingebettete Streams einen Kanalnamen und die Parent-Domain. Für unsere GitHub-Seite ist die Parent-Domain bereits gesetzt.",
- `<button onclick="playTwitch()">Stream laden</button><a class="btn" href="https://www.twitch.tv/" target="_blank" rel="noopener noreferrer">Twitch öffnen</a>`,
+ `<button onclick="playTwitch()">Stream laden</button><a class="btn" href="https://www.twitch.tv/" target="_self">Twitch öffnen</a>`,
  `<p><input id="twch" placeholder="Twitch Kanalname"></p>`);
 }
 function playTwitch(){const c=document.getElementById("twch").value.trim().replace(/[^A-Za-z0-9_]/g,"");if(!c)return;P.innerHTML=`<iframe src="https://player.twitch.tv/?channel=${encodeURIComponent(c)}&parent=ghostbrentley.github.io&autoplay=true" allow="autoplay; fullscreen" allowfullscreen></iframe>`}
-function adult(){card("18+ Bereich","Die eingetragene Webseite erlaubt keine Einbettung. Sie kann direkt geöffnet werden. Nur für Erwachsene.",`<a class="btn" href="https://www.xnxx.com/" target="_blank" rel="noopener noreferrer">18+ Webseite öffnen</a>`)}
+function adult(){card("18+ Bereich","Die eingetragene Webseite erlaubt keine Einbettung. Sie kann direkt geöffnet werden. Nur für Erwachsene.",`<a class="btn" href="https://www.xnxx.com/" target="_self">18+ Webseite öffnen</a>`)}
 function load(n){current=(n+channels.length)%channels.length;const [name,type,url]=channels[current];N.textContent=`${current+1}/${channels.length} - ${name}`;if(type==="external")external(name,url);else if(type==="youtube")youtube();else if(type==="twitch")twitch();else adult()}
 function step(d){load(current+d)}
 function off(){card("Fernseher ausgeschaltet","","");N.textContent="AUS"}
